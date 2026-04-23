@@ -1,0 +1,52 @@
+{
+  "id": "geekzen",
+  "name": "极客禅",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "colors": {
+    "background": "#080808",
+    "text": "#F0EBE1",
+    "text_muted": "rgba(240,235,225,0.6)",
+    "border": "rgba(240,235,225,0.06)",
+    "emphasis": "#C03C28",
+    "seal_opacity": 0.35
+  },
+  "typography": {
+    "font_family": "'Noto Serif CJK TC', 'Noto Serif CJK SC', 'SimSun', serif",
+    "font_weight": 300,
+    "sizes": {
+      "single_char": 380,
+      "phrase": 130,
+      "sentence": 72,
+      "subtitle": 42
+    },
+    "letter_spacing": {
+      "single_char": "-0.02em",
+      "phrase": "0.08em",
+      "sentence": "0.05em",
+      "subtitle": "0.06em"
+    },
+    "line_height": {
+      "single_char": 1.0,
+      "phrase": 1.3,
+      "sentence": 1.6
+    }
+  },
+  "transitions": {
+    "fade_in_frames": 9,
+    "fade_out_frames": 6,
+    "pause_fade_frames": 24
+  },
+  "seal": {
+    "image": "seal.png",
+    "width": 80,
+    "height": 80,
+    "position": "bottom_right",
+    "margin_bottom": 64,
+    "margin_right": 88
+  },
+  "border_inset": 48
+}

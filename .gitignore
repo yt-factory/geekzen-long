@@ -1,0 +1,19 @@
+# 生成文件（不入库）
+episodes/*/output/
+episodes/*/__pycache__/
+
+# Node / Remotion
+node_modules/
+remotion/node_modules/
+remotion/.remotion/
+remotion/out/
+remotion/.cache/
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 临时文件
+*.tmp
+.DS_Store

@@ -1,0 +1,23 @@
+{
+  "id": "geekzen",
+  "name": "极客禅",
+  "tts": {
+    "engine": "edge-tts",
+    "primary": {
+      "voice": "zh-TW-YunJheNeural",
+      "rate": "-10%",
+      "pitch": "0Hz",
+      "description": "台湾男声，沉稳低调，适合哲学叙述"
+    },
+    "fallback": {
+      "voice": "zh-CN-YunxiNeural",
+      "rate": "-8%",
+      "description": "大陆男声备用"
+    }
+  },
+  "language": {
+    "script_lang": "zh-Hans",
+    "audio_lang": "zh-Hant",
+    "subtitle_langs": ["zh-Hans", "zh-Hant"]
+  }
+}

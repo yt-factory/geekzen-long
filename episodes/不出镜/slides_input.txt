@@ -1,0 +1,23 @@
+[
+  {"text": "一年多", "emphasis": false},
+  {"text": "从没出镜", "emphasis": false},
+  {"text": "借口", "emphasis": false},
+  {"text": "怕", "emphasis": false},
+  {"text": "外面没有别人", "emphasis": false},
+  {"text": "没有「外面」", "emphasis": false},
+  {"text": "保护什么", "emphasis": false},
+  {"text": "身份主权", "emphasis": false},
+  {"text": "你一出镜", "emphasis": false},
+  {"text": "就被归类了", "emphasis": false},
+  {"text": "恐惧还在\n理由不在了", "emphasis": false},
+  {"text": "声音是第二张脸", "emphasis": false},
+  {"text": "换了战场", "emphasis": false},
+  {"text": "叙事权", "emphasis": false},
+  {"text": "被看见 ≠ 被看穿", "emphasis": false},
+  {"text": "阴影", "emphasis": false},
+  {"text": "没藏好的\n更有穿透力", "emphasis": false},
+  {"text": "成为自己的观众", "emphasis": false},
+  {"text": "第三人称的你", "emphasis": false},
+  {"text": "不舒服", "emphasis": false},
+  {"text": "这把声音\n是真实的", "emphasis": true}
+]
