@@ -7,6 +7,7 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #5835 | 5:59 PM | 🟣 | Initialized GeekZen long-form video factory repository | ~532 |
 | #5825 | 5:56 PM | 🟣 | YouTube thumbnail generator tool for GeekZen channel | ~466 |
 | #5787 | 4:09 PM | 🔄 | Slide extraction refactored from Claude API to file-based manual curation | ~546 |
 | #5769 | 2:43 PM | 🟣 | Granular stage control added - only-think, only-write, only-tts flags | ~482 |

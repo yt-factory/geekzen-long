@@ -7,8 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #5835 | 5:59 PM | 🟣 | Initialized GeekZen long-form video factory repository | ~532 |
 | #5784 | 3:13 PM | 🟣 | Complete Remotion-based video rendering system with brand architecture | ~566 |
-| #5780 | 3:12 PM | 🟣 | Brand configuration system created with GeekZen voice profile | ~496 |
-| #5779 | " | ⚖️ | GeekZen brand design system codified with typography hierarchy and color palette | ~561 |
 </claude-mem-context>
