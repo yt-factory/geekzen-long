@@ -21,4 +21,25 @@
 | #5756 | 2:08 PM | 🔴 | Removed broken SSML break injection after API testing revealed incompatibility | ~511 |
 | #5750 | 2:02 PM | 🟣 | Centralized subtitle processor created in shared tools directory | ~445 |
 | #5749 | " | 🟣 | Unified TTS tool with automatic SSML pause injection | ~482 |
+
+### Apr 24, 2026
+
+| ID | Time | T | Title | Read |
+|----|------|---|-------|------|
+| #5868 | 1:08 PM | 🔴 | Comprehensive error handling and portability fixes across GeekZen pipeline | ~581 |
+| #5865 | 1:06 PM | 🔴 | Added empty slides validation to prevent opaque downstream ffmpeg failures | ~551 |
+| #5864 | " | 🔴 | Added missing Pillow and Playwright dependencies to requirements.txt | ~348 |
+| #5860 | 1:05 PM | 🔴 | Fixed missing slide handling, path escaping, and resource cleanup in video.py | ~676 |
+| #5859 | " | 🔵 | Comprehensive code review identified critical bugs in video generation pipeline | ~654 |
+| #5858 | 1:04 PM | 🔵 | Code review identified 12 bugs and design issues across geekzen-long toolchain | ~913 |
+| #5852 | 1:00 PM | 🔴 | Fixed inverted API key check logic for only_tts mode in pipeline | ~440 |
+| #5851 | " | 🔴 | Fixed ffmpeg subtitle path escaping for special characters in lavfi syntax | ~474 |
+| #5850 | 12:59 PM | 🔴 | Fixed ffmpeg concat file generation to handle missing slide files correctly | ~388 |
+| #5848 | " | 🔴 | Fixed pause insertion logic to count content slides only, not all slides | ~481 |
+| #5849 | " | 🔵 | Automated philosophical analysis to narration script converter | ~686 |
+| #5846 | " | 🔵 | Final video composition script using ffmpeg concat with slide timing | ~742 |
+| #5845 | " | 🔵 | YouTube thumbnail generator for GeekZen channel workflow | ~600 |
+| #5847 | " | 🔴 | Fixed SRT duration calculation to use maximum timestamp instead of last occurrence | ~475 |
+| #5844 | " | 🔵 | Subtitle multi-format conversion pipeline using OpenCC | ~591 |
+| #5843 | " | 🔵 | Code review identified 9 bugs across video pipeline (3 HIGH, 4 MEDIUM) | ~654 |
 </claude-mem-context>

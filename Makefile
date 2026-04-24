@@ -133,6 +133,22 @@ $(THUMB): $(OUT)
 	$(PY) $(TOOLS)/thumbnail.py "$(CARD)" "$(LINE1)" "$(LINE2)" "$(THUMB)"
 	@echo ""
 
+# 长视频缩略图（无需 ljg-card 书法图，代码直接生成深色背景）
+# 用法：make thumbnail-long TOPIC="不出镜" TITLE="我为什么不出镜" SUB="声音是第二张脸" EP=""
+TITLE   ?=
+SUB     ?=
+SEAL    ?= remotion/public/seal.png
+
+thumbnail-long: $(OUT)
+	@echo ""
+	@echo "━━━ thumbnail-long（极客禅长视频缩略图 1280×720）━━━"
+	$(PY) $(TOOLS)/geekzen_thumbnail_long.py "$(TITLE)" \
+		$(if $(SUB),--subtitle "$(SUB)",) \
+		$(if $(EP),--ep "$(EP)",) \
+		$(if $(wildcard $(SEAL)),--seal "$(SEAL)",) \
+		--output "$(OUT)/thumbnail.jpg"
+	@echo ""
+
 # ── 辅助目标 ────────────────────────────────────────────────────────────────
 
 ## Remotion Studio 实时预览
@@ -180,6 +196,8 @@ help:
 	@echo "  make remotion   TOPIC=\"主题\"                  # Remotion 渲染最终视频"
 	@echo "  make thumbnail  TOPIC=\"主题\" CHAR=怕 LINE1=\"我为什么\" LINE2=\"不出镜\""
 	@echo "                                               # YouTube 缩略图（需先 ljg-card -b CHAR）"
+	@echo "  make thumbnail-long TOPIC=\"主题\" TITLE=\"...\" SUB=\"...\" EP=\"12\""
+	@echo "                                               # 长视频缩略图（代码生成深色背景）"
 	@echo ""
 	@echo "其他："
 	@echo "  make studio   TOPIC=\"主题\"   # Remotion Studio 实时预览"

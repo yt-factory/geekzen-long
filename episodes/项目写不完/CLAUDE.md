@@ -7,6 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #5840 | 10:13 PM | ✅ | Added comprehensive documentation and Remotion video rendering source | ~569 |
-| #5784 | 3:13 PM | 🟣 | Complete Remotion-based video rendering system with brand architecture | ~566 |
+| #5747 | 2:01 PM | ✅ | Canonical v2 directory structure created for centralized tools architecture | ~385 |
 </claude-mem-context>
