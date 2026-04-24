@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 thumbnail.py — 极客禅 YouTube 缩略图生成器
 
@@ -39,7 +40,10 @@ def make_thumbnail(card_path: str, line1: str, line2: str, out_path: str) -> Non
     try:
         font = ImageFont.truetype(FONT_BOLD, TITLE_SIZE, index=0)
     except OSError:
-        font = ImageFont.load_default()
+        raise OSError(
+            f"字体未找到: {FONT_BOLD}\n"
+            "安装命令: sudo apt install fonts-noto-cjk"
+        )
 
     def wh(text):
         bb = draw.textbbox((0, 0), text, font=font)

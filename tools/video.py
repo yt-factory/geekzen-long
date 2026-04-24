@@ -24,18 +24,19 @@ from pathlib import Path
 
 def _build_concat(slides_dir: Path, timing: list[dict], tmp_path: str) -> None:
     lines = []
+    last_added: str | None = None
     for i, slide in enumerate(timing):
         png = slides_dir / f"slide_{i:03d}.png"
         if not png.exists():
             print(f"  ⚠ 找不到 {png.name}，跳过")
             continue
-        lines.append(f"file '{png.absolute()}'")
+        last_added = str(png.absolute())
+        lines.append(f"file '{last_added}'")
         lines.append(f"duration {slide.get('duration', 2.0):.3f}")
 
-    # ffmpeg concat demuxer: last frame must be listed twice
-    if timing:
-        last = slides_dir / f"slide_{len(timing)-1:03d}.png"
-        lines.append(f"file '{last.absolute()}'")
+    # ffmpeg concat demuxer: last successfully added frame must be listed twice
+    if last_added:
+        lines.append(f"file '{last_added}'")
 
     with open(tmp_path, "w") as f:
         f.write("\n".join(lines))
@@ -75,11 +76,14 @@ def run_video(output_dir: str) -> None:
         "MarginV=60"
     )
 
+    # Escape path for ffmpeg lavfi filter parser (colons and backslashes are special)
+    srt_escaped = str(srt_path).replace("\\", "\\\\").replace(":", "\\:")
+
     cmd = [
         "ffmpeg", "-y",
         "-f", "concat", "-safe", "0", "-i", concat_path,
         "-i", str(audio_path),
-        "-vf", f"subtitles={srt_path}:force_style='{subtitle_style}',fade=t=in:st=0:d=0.5",
+        "-vf", f"subtitles=filename='{srt_escaped}':force_style='{subtitle_style}',fade=t=in:st=0:d=0.5",
         "-c:v", "libx264",
         "-preset", "slow",
         "-crf", "18",
@@ -91,8 +95,10 @@ def run_video(output_dir: str) -> None:
     ]
 
     print("  → ffmpeg 合成中（可能需要几分钟）…")
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    os.unlink(concat_path)
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True)
+    finally:
+        os.unlink(concat_path)
 
     if result.returncode != 0:
         print("❌ ffmpeg 错误：")

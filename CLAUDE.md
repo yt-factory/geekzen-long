@@ -102,11 +102,11 @@ ffmpeg -i slides.mp4 -i output/audio_tw.mp3 \
   output/final_softsub.mp4
 ```
 
-## SSML 技术说明
+## TTS 技术说明
 
-edge-tts 7.x 内部对文本做 `xml.sax.saxutils.escape()`，直接传 SSML 会把 `<break>` 转义掉。
-解决：预先 escape 文本部分，保留 break 标签为原始 XML，直接覆盖 `comm.texts` 绕过库的 escape。
-详见 `tools/tts.py` 中 `build_ssml_chunks()`。
+edge-tts 使用的 Microsoft Edge TTS 端点不支持 `<break>` SSML 标签（会返回"No audio received"）。
+当前方案：直接传纯文本，配合 `boundary="SentenceBoundary"` 和 `rate="-10%"` 实现自然停顿。
+中文标点（。！？……）自带足够的语音边界，无需额外 SSML。详见 `tools/tts.py` docstring。
 
 ## 已有 episodes
 

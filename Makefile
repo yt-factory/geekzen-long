@@ -8,7 +8,7 @@
 #        make video TOPIC="项目写不完"
 # ─────────────────────────────────────────────────────────────────────────────
 
-PY      := /home/davidlu/.local/share/pipx/venvs/pip/bin/python3.12
+PY      := $(shell command -v python3.12 2>/dev/null || command -v python3 2>/dev/null || echo python3)
 TOOLS   := tools
 
 TOPIC   ?= 不出镜

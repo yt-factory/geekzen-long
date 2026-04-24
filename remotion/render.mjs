@@ -13,6 +13,7 @@ import { bundle } from "@remotion/bundler";
 import { renderMedia, selectComposition } from "@remotion/renderer";
 import { copyFileSync, existsSync, readFileSync, unlinkSync } from "fs";
 import { join, resolve } from "path";
+import { execSync } from "child_process";
 
 const outputDir = resolve(process.argv[2] ?? ".");
 const timingPath = join(outputDir, "slides_timing.json");
@@ -21,6 +22,14 @@ const srtPath = join(outputDir, "subtitle_zh_hans.srt");
 const finalPath = join(outputDir, "final_remotion.mp4");
 
 const publicDir = new URL("./public", import.meta.url).pathname;
+
+// ── Preflight checks ──────────────────────────────────────────────────
+for (const [path, label] of [[timingPath, "slides_timing.json"], [audioPath, "audio_tw.mp3"]]) {
+  if (!existsSync(path)) {
+    console.error(`❌ 找不到 ${label}: ${path}`);
+    process.exit(1);
+  }
+}
 
 // ── Copy audio into public/ so Remotion's HTTP server can serve it ─────
 // Remotion only serves files inside public/; absolute/file:// paths are rejected.
@@ -54,7 +63,21 @@ function parseSrt(path) {
 
 const subtitles = parseSrt(srtPath);
 
-const totalDuration = slides.reduce((max, s) => Math.max(max, s.end), 0);
+const slideDuration = slides.reduce((max, s) => Math.max(max, s.end), 0);
+
+// Use audio duration as the floor so the video isn't truncated before audio ends
+let audioDuration = slideDuration;
+try {
+  const probe = execSync(
+    `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${audioPath}"`,
+    { encoding: "utf-8" }
+  ).trim();
+  audioDuration = parseFloat(probe) || slideDuration;
+} catch {
+  // ffprobe unavailable — fall back to slide-based duration
+}
+
+const totalDuration = Math.max(slideDuration, audioDuration);
 const durationInFrames = Math.ceil(totalDuration * 30) + 30; // +1s buffer
 
 // ── Remotion render ────────────────────────────────────────────────────
@@ -78,6 +101,7 @@ const composition = await selectComposition({
 console.log(`Rendering ${slides.length} slides, ${totalDuration.toFixed(1)}s → ${finalPath}`);
 const t0 = Date.now();
 
+try {
 await renderMedia({
   composition: {
     ...composition,
@@ -95,8 +119,10 @@ await renderMedia({
   },
 });
 
-// Cleanup temp audio copy
-unlinkSync(publicAudio);
+} finally {
+  // Always clean up temp audio copy, even if render throws
+  if (existsSync(publicAudio)) unlinkSync(publicAudio);
+}
 
 const elapsed = ((Date.now() - t0) / 1000).toFixed(0);
 const mb = (existsSync(finalPath) ? readFileSync(finalPath).length : 0) / (1024 * 1024);

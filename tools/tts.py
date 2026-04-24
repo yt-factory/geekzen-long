@@ -32,6 +32,10 @@ async def generate(
 ):
     os.makedirs(output_dir, exist_ok=True)
 
+    if not os.path.exists(script_path):
+        print(f"❌ 找不到脚本文件: {script_path}")
+        sys.exit(1)
+
     with open(script_path, encoding="utf-8") as f:
         raw_text = f.read().strip()
 

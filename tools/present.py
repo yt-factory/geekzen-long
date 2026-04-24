@@ -56,7 +56,11 @@ def _parse_slides_input(slides_input_path: Path) -> list[dict]:
         content = f.read().strip()
 
     if content.startswith("[") or content.startswith("{"):
-        return _parse_json_slides(content)
+        try:
+            return _parse_json_slides(content)
+        except json.JSONDecodeError as e:
+            print(f"  ⚠ slides_input.txt JSON 解析失败（{e}），回退到纯文本解析")
+            return _parse_text_slides(content)
     else:
         return _parse_text_slides(content)
 
@@ -92,12 +96,16 @@ def _parse_json_slides(content: str) -> list[dict]:
 
         slides.append({"text": text, "type": stype, "paragraph_index": para_idx})
 
+    # Post-pass: insert a pause every 5 content slides
     result = []
-    for i, slide in enumerate(slides):
+    content_count = 0
+    for slide in slides:
         result.append(slide)
-        if (i + 1) % 5 == 0 and i < len(slides) - 1:
-            if result[-1]["type"] != "pause":
-                result.append({"text": "", "type": "pause", "paragraph_index": slide["paragraph_index"]})
+        if slide["type"] != "pause":
+            content_count += 1
+            if content_count % 5 == 0 and len(result) < len(slides):
+                if result[-1]["type"] != "pause":
+                    result.append({"text": "", "type": "pause", "paragraph_index": slide["paragraph_index"]})
 
     while result and result[0]["type"] == "pause":
         result.pop(0)
@@ -207,7 +215,7 @@ def _srt_total_seconds(srt_path: str) -> float:
         h, m, s = t.split(":")
         return int(h) * 3600 + int(m) * 60 + float(s)
 
-    return parse(times[-1])
+    return max(parse(t) for t in times)
 
 
 def calculate_timing(slides: list[dict], total_seconds: float) -> list[dict]:
@@ -350,6 +358,9 @@ async def run_present(script_path: str, output_dir: str, srt_path: str | None = 
 
     print("  → 提取高桥流关键词…")
     slides = extract_slides(script_path)
+    if not slides:
+        print("❌ 未提取到幻灯片，请检查 slides_input.txt 或 script.txt")
+        sys.exit(1)
     print(f"  → {len(slides)} 张幻灯片")
 
     total_secs = _srt_total_seconds(srt_path) if srt_path and Path(srt_path).exists() else 60.0

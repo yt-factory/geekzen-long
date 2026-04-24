@@ -131,7 +131,8 @@ ffmpeg 合成参考：
 # ── helpers ────────────────────────────────────────────────────────────
 
 def _check_api_key(skip_think: bool, skip_write: bool, only_tts: bool = False):
-    will_use_api = (not skip_think) or (not skip_write and not only_tts)
+    # only_tts bypasses both think and write unconditionally
+    will_use_api = not only_tts and (not skip_think or not skip_write)
     if will_use_api and not os.environ.get("ANTHROPIC_API_KEY"):
             print("❌  ANTHROPIC_API_KEY 未设置。")
             print("   请先执行：export ANTHROPIC_API_KEY='sk-ant-...'")
